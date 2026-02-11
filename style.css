@@ -1,0 +1,184 @@
+:root {
+    --bg-color: #0f172a;
+    --accent-color: #38bdf8; /* El celeste neón */
+}
+
+body {
+    background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    min-height: 100vh;
+}
+
+.btn-volver {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid var(--accent-color);
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-volver:hover {
+    background: var(--accent-color);
+    color: #0f172a;
+}
+
+#board {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 20px;
+    align-items: center; /* Centra las filas */
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    width: 100%; /* Para que se adapte al contenedor */
+}
+
+.highlight {
+    color: var(--accent-color);
+}
+
+.tile {
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde más sutil */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: rgba(30, 41, 59, 0.5); /* Fondo semi-transparente */
+}
+
+/* Estas clases se aplicarán tanto a los cuadritos como a las teclas */
+.correct { background-color: #538d4e !important; border: none; } 
+.present { background-color: #b59f3b !important; border: none; }
+.absent { background-color: #3a3a3c !important; border: none; }
+
+/* Para que las letras del teclado resalten */
+.key.correct, .key.present, .key.absent {
+    color: white;
+    transition: background-color 0.5s ease;
+}
+#keyboard {
+    margin-top: 30px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+    touch-action: manipulation;
+}
+
+.key {
+    background-color: #818384;
+    color: white;
+    border: 0;
+    border-radius: 4px;
+    margin: 0 3px;
+    height: 58px;
+    flex: 1;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.key.wide {
+    flex: 1.5;
+}
+
+/* Estilos del Modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: #1e293b;
+    margin: 15% auto;
+    padding: 30px;
+    border: 2px solid #f59e0b; /* Borde naranja/amarillo */
+    border-radius: 15px;
+    width: 320px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #94a3b8;
+}
+
+#share-btn {
+    background-color: #f59e0b;
+    color: #0f172a;
+    border: none;
+    padding: 12px 25px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#status-container {
+    min-height: 80px; /* Mantiene el espacio para que el teclado no se mueva */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.status-main {
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.status-player {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.win-color { color: #538d4e; } /* Verde */
+.lose-color { color: #e11d48; } /* Rojo/Rosa */
+
+#share-btn:hover { background-color: #fbbf24; }
+
+/* Clase para evitar que sigan escribiendo al terminar */
+.game-over-active {
+    pointer-events: none; /* Bloquea clics en el teclado virtual */
+    opacity: 0.8;
+}
