@@ -100,14 +100,43 @@ function checkGuess() {
 
     const tiles = document.querySelectorAll('.row')[currentAttempt].querySelectorAll('.tile');
     
-    // Pintar la fila actual
+    // 1. Lógica de conteo de letras (Para evitar amarillos de más)
+    let targetLetterCount = {};
+    for (let letra of targetWord) {
+        targetLetterCount[letra] = (targetLetterCount[letra] || 0) + 1;
+    }
+
+    let results = Array(largo).fill('absent');
+
+    // PRIMERA PASADA: Identificar Verdes (Correctos)
     guess.split("").forEach((letra, i) => {
-        pintarResultadoFila(tiles[i], letra, i);
+        if (letra === targetWord[i]) {
+            results[i] = 'correct';
+            targetLetterCount[letra]--;
+        }
+    });
+
+    // SEGUNDA PASADA: Identificar Amarillos (Presentes)
+    guess.split("").forEach((letra, i) => {
+        if (results[i] !== 'correct') {
+            if (targetLetterCount[letra] > 0) {
+                results[i] = 'present';
+                targetLetterCount[letra]--;
+            }
+        }
+    });
+
+    // 2. Aplicar colores a las casillas y teclado
+    results.forEach((resultado, i) => {
+        const tile = tiles[i];
+        const letra = guess[i];
+        tile.classList.add(resultado);
+        pintarTecla(letra, resultado);
     });
 
     currentAttempt++;
     
-    // GUARDAR PROGRESO
+    // Guardar progreso
     localStorage.setItem('intentosGuardados', JSON.stringify(guesses));
     localStorage.setItem('intentoActual', currentAttempt);
     localStorage.setItem('fechaUltimoJuego', new Date().toDateString());
@@ -179,12 +208,25 @@ function backspace() {
     }
 }
 
-function pintarTecla(l, cls) {
-    const t = document.querySelector(`[data-key="${l}"]`);
-    if (t) {
-        if (t.classList.contains('correct')) return; // No bajar de verde a amarillo
-        t.classList.add(cls);
+// 3. Jerarquía de colores para el teclado
+function pintarTecla(letra, nuevaClase) {
+    const tecla = document.querySelector(`[data-key="${letra}"]`);
+    if (!tecla) return;
+
+    // Si la tecla ya está verde, nunca cambia
+    if (tecla.classList.contains('correct')) return;
+
+    // Si la tecla está amarilla, solo cambia si el nuevo resultado es verde
+    if (tecla.classList.contains('present')) {
+        if (nuevaClase === 'correct') {
+            tecla.classList.remove('present');
+            tecla.classList.add('correct');
+        }
+        return;
     }
+
+    // Si no tiene color, aplicamos el que toque
+    tecla.classList.add(nuevaClase);
 }
 
 function manejarEntradaTeclado(e) {
