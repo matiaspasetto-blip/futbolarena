@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futbol Top 10</title>
+    <link rel="stylesheet" href="top10.css">
+</head>
+<body>
+    <a href="home.html" class="btn-volver">← Volver al Menú</a>
+
+    <main class="top10-container">
+        <h1 class="logo">FUTBOL<span>11</span> TOP 10</h1>
+        <p class="challenge-title" id="challenge-title">Cargando desafío...</p>
+
+        <section class="board" id="board"></section>
+
+        <div class="controls">
+            <input id="guess-input" type="text" placeholder="Type the footballer here" autocomplete="off">
+            <button id="guess-btn" class="guess-btn">Adivinar</button>
+        </div>
+
+        <div class="status" id="status"></div>
+        <div class="timer" id="timer"></div>
+    </main>
+
+    <div class="overlay" id="intro-overlay">
+        <div class="intro-card">
+            <h2>FUTBOL<span>11</span> TOP10</h2>
+            <p>
+                Adiviná el top 10 de futbolistas según el título del día.
+                El juego muestra la nacionalidad de cada puesto como pista inicial.
+            </p>
+            <p>Elegí un modo:</p>
+            <div class="mode-row">
+                <button class="mode-btn active" data-mode="normal">Normal</button>
+                <button class="mode-btn" data-mode="timed">2 min timer</button>
+            </div>
+            <button id="start-btn" class="start-btn">Start Game</button>
+        </div>
+    </div>
+
+    <script src="top10.js"></script>
+</body>
+</html>
